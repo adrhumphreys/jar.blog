@@ -1,0 +1,6 @@
+baseURL = "https://blog.jar.nz/"
+languageCode = "en-nz"
+title = "Blog"
+theme="blog"
+disableKinds = ["taxonomy", "taxonomyTerm"]
+pygmentsUseClasses=true

@@ -1,0 +1,11 @@
+name = "Blog"
+license = "MIT"
+description = "Basic blog theme"
+homepage = "https://github.com/adrhumphreys"
+tags = ["website", "starter", "responsive", "blog"]
+features = ["posts"]
+min_version = "0.72.0"
+
+[author]
+  name = "Adrian Humphreys"
+  homepage = "https://github.com/adrhumphreys"

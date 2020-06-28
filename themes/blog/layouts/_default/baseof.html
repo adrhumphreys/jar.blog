@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ block "title" . }}{{ with .Params.Title }}{{ . }} | {{ end }}{{ .Site.Title }}{{ end }}</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    {{ $style := resources.Get "styles.scss" | toCSS | minify | fingerprint }}
+    <!-- <link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}"> -->
+    <!-- Inline the styles rather than link to them? -->
+    <style>{{ $style.Content | safeCSS }}</style>
+
+
+    {{ $fontFamily := "Open+Sans" }}
+    <link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin />
+
+    <link rel="preload"
+      as="style"
+      href="{{ $fontFamily }}&display=swap" />
+
+    <link rel="stylesheet"
+      href="{{ $fontFamily }}&display=swap"
+      media="print" onload="this.media='all'" />
+
+    <noscript>
+      <link rel="stylesheet"
+        href="{{ $fontFamily }}&display=swap" />
+    </noscript>
+  </head>
+
+  <body>
+    <header>
+      <p><a href="/">🌸</a></p>
+    </header>
+    <main>
+      {{ block "main" . }}{{ end }}
+    </main>
+    <footer>
+      <p>Check out my other half finished projects on <a href="https://github.com/adrhumphreys/">Github</a>. <br/> 🦝 trash panda, 1990's -</p>
+    </footer>
+  </body>
+</html>

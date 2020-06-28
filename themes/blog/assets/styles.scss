@@ -1,0 +1,78 @@
+@import "monokai";
+
+$pink: #FFF0EB;
+$blue: blue;
+$paragraphColor: #333;
+$paragraphFont: 'Open Sans', sans-serif;
+
+html {
+	background-color: $pink;
+}
+
+body {
+	background-color: white;
+	color: $paragraphColor;
+	font-family: $paragraphFont;
+  	margin: 0;
+}
+
+main, header p, footer p {
+	max-width: 888px;
+	margin-left: auto;
+	margin-right: auto;
+  	padding-left: 20px;
+  	padding-right: 20px;
+}
+
+header, footer {
+	background-color: $pink;
+	padding-top: 15px;
+	padding-bottom: 15px;
+
+
+	p {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+
+header {
+	margin-bottom: 20px;
+}
+
+img {
+	height: auto;
+	width: 100%;
+}
+
+iframe {
+	width: 100%;
+}
+
+a {
+	text-decoration: none;
+	color: $blue;
+}
+
+h1 {
+	display: inline;
+	border-top-left-radius: 1em;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 1em;
+	border-bottom-left-radius: 0px;
+	background-image: linear-gradient(-100deg, rgba(255, 250, 150, 0.14902), rgba(255, 250, 150, 0.8) 100%, rgba(255, 250, 150, 0.247059));
+
+	a {
+		color: $paragraphColor;
+	}
+}
+
+.posts {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+
+	li {
+		margin-bottom: 20px;
+	}
+}
