@@ -5,6 +5,7 @@
     <title>{{ block "title" . }}{{ with .Params.Title }}{{ . }} | {{ end }}{{ .Site.Title }}{{ end }}</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1">
     <meta name="description" content="{{ if .Params.Description }}{{ .Params.Description }}{{ else }}A place for my meandering{{ end }}">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     {{ $style := resources.Get "styles.scss" | toCSS | minify | fingerprint }}
     <!-- <link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}"> -->
     <!-- Inline the styles rather than link to them? -->
