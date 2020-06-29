@@ -51,3 +51,7 @@ You can now follow along with the guide linked before to set up the host in Akam
 
 ## Switch over
 Now we can update the Akamai property to also expose our `/adobelaunch` files. We can then change the rule for the path `/tag-manager.js` to now point to the launch files and apply the property. This should now let you roll over rather quickly without needing to quickly recache all the content or make too many changes
+
+## Gotchas
+If you change between connecting to Akamai via staging/prod then you need to unload your keys from your ssh agent, which can be done by running `ssh-add -D`. Otherwise sftp will have added it to the list of keys, use that one as the first key and then Akamai will see you connecting to a server with that key and presume you got your servers mixed up (odd issue, but ok).
+Launch SFTP requires you're key to be a specific type, follow the article linked for generating they key
