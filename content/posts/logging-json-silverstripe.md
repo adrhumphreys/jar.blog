@@ -7,7 +7,7 @@ title: "Logging JSON to Greylogs (in Silverstripe)"
 
 When logging data to Greylogs it quite often is hard to query important parts of that data in a structured way. Greylogs has also released the ability to graph your structured data which is where this pays off even more.
 
-Lets first start with the method for logging the data to Greylogs. In ourcase we're using the [Silverstripe Cloud](https://www.silverstripe.com/cloud-hosting) for hosting. So we know that anything added to `syslog` will be picked up in Greylogs.
+Let's first start with the method for logging the data to Greylogs. In our case we're using the [Silverstripe Cloud](https://www.silverstripe.com/cloud-hosting) for hosting. So we know that anything added to `syslog` will be picked up in Greylogs.
 
 In this specific example I'm going to detail how we log data from the queued jobs module a real world use case.
 
@@ -88,7 +88,7 @@ interface Snapshot
 
 Since we're going to be passing our snapshots to the logger we want to be able convert them to an array which can be then encoded into JSON.
 
-For the queue snapshot I'll document the basic outline but leave out a chunk of the logic for determinig the values:
+For the queue snapshot I'll document the basic outline but leave out a chunk of the logic for determining the values:
 
 ```php
 <?php
@@ -229,7 +229,7 @@ class SnapshotTask extends BuildTask
 }
 ```
 
-It's also at this point that you could create a `DataObject` that also records the queue snapshot for later referring to in the CMS or for reporting on the health of the queue (You could use the [enivornment check package](https://github.com/silverstripe/silverstripe-environmentcheck))
+It's also at this point that you could create a `DataObject` that also records the queue snapshot for later referring to in the CMS or for reporting on the health of the queue (You could use the [environment check package](https://github.com/silverstripe/silverstripe-environmentcheck))
 
 With this we now have the data being logged in Greylogs and accessible in there.
 
