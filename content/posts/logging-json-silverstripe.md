@@ -33,7 +33,7 @@ final class Logger
     private const HANDLER_IDENT = 'SilverStripe_log';
 
     // We'll add more onto this in a moment
-	public static function logSnapshot(Snapshot $snapshot): void
+    public static function logSnapshot(Snapshot $snapshot): void
     {
         self::toSyslog(json_encode($snapshot->generateArray(), JSON_FORCE_OBJECT));
     }
