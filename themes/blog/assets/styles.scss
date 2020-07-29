@@ -84,10 +84,21 @@ h1 {
 	}
 }
 
-p code {
+
+// Lists don't have p tags with our markdown processer
+li code,
+p code, {
 	background-color: #F6F6F6;
 	border: 1px solid #b9b9b9;
 	border-radius: 4px;
 	color: #E01E5A;
     padding: 2px 5px;
+}
+
+blockquote {
+	padding-left: 1em;
+    margin-left: 0;
+    border-left: 5px solid #607D8B;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
