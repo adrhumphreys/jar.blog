@@ -1,18 +1,36 @@
 @import "monokai";
 
+:root {
+  --header-bg-color: #FFF2FC;
+  --header-font-color: #333;
+  --font-color: #333;
+  --body-bg-color: white;
+  --snippet-bg-color: #eee;
+  --link-font-color: blue;
+}
+
+@media(prefers-color-scheme: dark) {
+  :root {
+  	--header-bg-color: #333;
+  	--header-font-color: #fff;
+  	--font-color: #fff;
+  	--body-bg-color: #333;
+  	--snippet-bg-color: black;
+  	--link-font-color: mediumaquamarine;
+  }
+}
+
 $pink: #FFF2FC;
 $blue: blue;
 $paragraphColor: #333;
 $paragraphFont: "Open Sans", sans-serif;
 $headerFont: "Zilla Slab", serif;
 
-html {
-	background-color: $pink;
-}
+
 
 body {
-	background-color: white;
-	color: $paragraphColor;
+	background-color: var(--body-bg-color);
+	color: var(--font-color);
 	font-family: $paragraphFont;
 	line-height: 1.5;
 	margin: 0;
@@ -34,7 +52,7 @@ h2 {
 	line-height: 1.2;
 
 	a {
-		color: $paragraphColor;
+		color: var(--font-color);;
 	}
 }
 
@@ -50,7 +68,7 @@ footer p {
 
 header,
 footer {
-	background-color: $pink;
+	background-color: var(--header-bg-color);
 	padding-top: 15px;
 	padding-bottom: 15px;
 
@@ -61,11 +79,10 @@ footer {
 }
 
 header {
-	background-color: $pink;
 	margin-bottom: 20px;
 
 	a {
-		color: #333;
+		color: var(--header-font-color);
 		font-weight: 600;
 	}
 }
@@ -87,7 +104,7 @@ iframe {
 
 a {
 	text-decoration: none;
-	color: $blue;
+	color: var(--link-font-color);
 }
 
 .posts {
@@ -114,7 +131,7 @@ hr {
 // Lists don't have p tags with our markdown processer
 li code,
 p code {
-	background-color: #eee;
+	background-color: var(--snippet-bg-color);
 	padding: 2px 5px;
 }
 
@@ -131,5 +148,3 @@ blockquote {
 		margin: 0;
 	}
 }
-
-//kelly
