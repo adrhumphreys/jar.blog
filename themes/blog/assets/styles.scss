@@ -1,9 +1,10 @@
 @import "monokai";
 
-$pink: #FFF0EB;
+$pink: #FFF2FC;
 $blue: blue;
 $paragraphColor: #333;
-$paragraphFont: 'Open Sans', sans-serif;
+$paragraphFont: "Open Sans", sans-serif;
+$headerFont: "Zilla Slab", serif;
 
 html {
 	background-color: $pink;
@@ -14,22 +15,35 @@ body {
 	color: $paragraphColor;
 	font-family: $paragraphFont;
 	line-height: 1.5;
-  	margin: 0;
+	margin: 0;
+	word-break: break-word;
 }
 
-main, header p, footer p {
-	max-width: 888px;
+h1,
+h2 {
+	font-family: $headerFont;
+	margin-bottom: 0;
+
+	a {
+		color: $paragraphColor;
+	}
+}
+
+main,
+header p,
+footer p {
+	max-width: 768px;
 	margin-left: auto;
 	margin-right: auto;
-  	padding-left: 20px;
-  	padding-right: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
-header, footer {
+header,
+footer {
 	background-color: $pink;
 	padding-top: 15px;
 	padding-bottom: 15px;
-
 
 	p {
 		margin-top: 0;
@@ -38,11 +52,17 @@ header, footer {
 }
 
 header {
+	background-color: $pink;
 	margin-bottom: 20px;
 
 	a {
 		color: #333;
+		font-weight: 600;
 	}
+}
+
+footer {
+	margin-top: 50px;
 }
 
 img {
@@ -61,19 +81,6 @@ a {
 	color: $blue;
 }
 
-h1 {
-	display: inline;
-	border-top-left-radius: 1em;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 1em;
-	border-bottom-left-radius: 0px;
-	background-image: linear-gradient(-100deg, rgba(255, 250, 150, 0.14902), rgba(255, 250, 150, 0.8) 100%, rgba(255, 250, 150, 0.247059));
-
-	a {
-		color: $paragraphColor;
-	}
-}
-
 .posts {
 	list-style: none;
 	padding: 0;
@@ -82,23 +89,39 @@ h1 {
 	li {
 		margin-bottom: 20px;
 	}
+
+	p {
+		font-style: italic;
+		margin-top: 0;
+		margin-bottom: 5px;
+	}
 }
 
+hr {
+	max-width: 550px;
+	margin: 30px 0 10px;
+}
 
 // Lists don't have p tags with our markdown processer
 li code,
-p code, {
-	background-color: #F6F6F6;
-	border: 1px solid #b9b9b9;
-	border-radius: 4px;
-	color: #E01E5A;
-    padding: 2px 5px;
+p code {
+	background-color: #eee;
+	padding: 2px 5px;
 }
 
 blockquote {
-	padding-left: 1em;
-    margin-left: 0;
-    border-left: 5px solid #607D8B;
-    padding-top: 5px;
-    padding-bottom: 5px;
+	margin-left: 0;
+	// border-left: 5px solid #3d7e9a;
+	font-family: $headerFont;
+	font-weight: 500;
+	font-style: italic;
+	font-size: 1.5rem;
+	padding: 20px 40px;
+
+	p {
+		position: relative;
+		margin: 0;
+	}
 }
+
+//kelly

@@ -21,15 +21,17 @@ WHERE ("ID" = ?)
 HY000-1205: Lock wait timeout exceeded; try restarting transaction
 ```
 
-**First assumption:** This is an issue with the database  
-- We can check monitoring in Grafana for our RDS and confirm that it's not under and heavy load
+## First assumption:  
+This is an issue with the database  
+- We can check monitoring in Grafana for our RDS and confirm that it's not under any heavy load
 - We can run `SHOW FULL PROCESSLIST;` and check for any processes that have gotten into an odd stuck state (there is a process holding a database connection open, but not using it - This is often consistent with PHP that is taking a long time to process the data.)
 - We can check for previous deadlocks via `SHOW ENGINE INNODB STATUS;` but that doesn't enlighten us with any meaningful information
 
 We can rule out this being an issue with other connections to the database at this point. We'll start taking a database snapshot to try and replicate the issue locally (this process will take around 2-3 hours due the size of the database).
 
 
-**Second assumption:** It's specific to the content of the page being published.  
+## Second assumption:
+It's specific to the content of the page being published.  
 We can publish other pages on the site so it looks like it might be a combination of content thats on the page and what gets executed when we publish it.
 
 We'll recreate the page in both our Staging environment and in our Production environment and check if publishing still breaks the page. First to complete is the Staging page and it publishes without issues. The production page is then completed and it breaks.
@@ -44,12 +46,14 @@ We can see that this error is caused by our CDN responding with a generic error 
 
 We recreate the asset on our staging server and it breaks, alright we're onto something. We can confirm that the request is also see that we're getting a `504 Gateway Timeout` from nginx since we can bypass the CDN on our staging server. nginx is configured to timeout after 4 minutes by default.
 
-**Third assumption:** The asset thumbnail or processing of it is causing our error.  
+## Third assumption:
+The asset thumbnail or processing of it is causing our error.  
 We try to recreate the asset issue again but it doesn't break, it uploads just fine. We try a few more times and the assets are behaving like normal. We go back to production and try reproducing it again and the new assets behave fine. The assets that were broken, stay broken however.
 
 *At this point we've gone back to the client with assets that work for the page in question so their marketing team can launch the campaign while we investigate the issue further.*
 
-**Fourth assumption:** The Elastic File System (EFS) is not keeping in sync correctly creating broken files.  
+## Fourth assumption:
+The Elastic File System (EFS) is not keeping in sync correctly creating broken files.  
 It's a long shot but when we first save a Video we grab the image from YouTubes oembed API, and download the linked thumbnail to serve as the default asset. We can see the process outlined in our method `onBeforeWrite` which is also called when you publish something.
 
 Lets look at some code from this function:
@@ -77,10 +81,11 @@ Therefore we can eliminate the YouTube generator firing again on publish as a li
 
 One other source for the file sync, could the EFS connection gone sideways and the asset on the server themselves is different. We can SSH in and check the hashes and permissions for the files and confirm their the same.
 
-**Reproducible locally?**  
+## Reproducible locally?
 We've restored the database to our local environment, but can't find a way to reproduce it locally
 
-**More information is needed.** We'll create a small snippet of code to make reproducing the issue easier. The task looks like the following:
+## More information is needed.
+We'll create a small snippet of code to make reproducing the issue easier. The task looks like the following:
 ```php
 <?php
 $video = Video::get_by_id((int) $id);
@@ -88,21 +93,25 @@ $video->publishRecursive();
 ```
 
 We can run these from the command line while SSH'ed into our staging server. The task runs for >30 minutes and then we get the following exception:
-> Fatal error: Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /var/www/mysite/releases/046d2d2565825741941ddfa598701a937f48dafd/vendor/league/flysystem/src/Adapter/Local.php on line 508  
-> Fatal error: Allowed memory size of 1073741824 bytes exhausted (tried to allocate 32768 bytes) in /var/www/mysite/releases/046d2d2565825741941ddfa598701a937f48dafd/vendor/graze/monolog-extensions/src/Graze/Monolog/Formatter/RaygunFormatter.php on line 1
-
+```js
+Fatal error: Allowed memory size of 1073741824 bytes exhausted (tried to allocate 20480 bytes) in /var/www/mysite/releases/046d2d2565825741941ddfa598701a937f48dafd/vendor/league/flysystem/src/Adapter/Local.php on line 508
+Fatal error: Allowed memory size of 1073741824 bytes exhausted (tried to allocate 32768 bytes) in /var/www/mysite/releases/046d2d2565825741941ddfa598701a937f48dafd/vendor/graze/monolog-extensions/src/Graze/Monolog/Formatter/RaygunFormatter.php on line 1
+```
 Alright the first exception is from us running out of memory which is fine and standard, the second is when PHP has reset the memory, etc to push out the exception and run out of memory trying to do that. This means our call stack/info was too large for PHP to even send away. This sounds like it might be something recursive, PHP by default doesn't have call stack limitations, that's added by XDebug which isn't on these servers
 
-**Fifth assumption:** It's the file staying open in the file system on one of the servers while the other tried to publish it.  
+## Fifth assumption:
+It's the file staying open in the file system on one of the servers while the other tried to publish it.  
 We cycle all our instances out to get a fresh slate. The issue still occurs so we can rule that out.
 
-**Sixth assumption:** We've updated the packages responsible for PHP, Apache, Nginx, etc and that's introduced this issue.  
+## Sixth assumption:
+We've updated the packages responsible for PHP, Apache, Nginx, etc and that's introduced this issue.  
 We rollback to a previous version, it doesn't fix the issue though.
 
-**Profile the task with [Blackfire](https://blackfire.io/):** If we profile it, we can identify what's going astray.
+## Profile the task with [Blackfire](https://blackfire.io/):
+If we profile it, we can identify what's going astray.
 First we start by profiling the task on a known *good* asset, it profiles as expected and is very short. We then try it on the broken asset, the task runs for too long, our machine is automatically identified as being in a broken state by running out of memory, or processing power, etc. It gets cycled out and we can't get a profile.
 
-**Lets log things!**  
+## Lets log things!
 We can't debug anything as it's only on our staging server. We can't profile anything as it breaks the instance. Let's do some cheap logs throughout the code to find the cause.
 
 First we start with the `onBeforeWrite` we'll edit the Extensible class from the framework to log the extensions applied to the class and the methods being called. We can see that it gets through *most* of the `onBeforeWrite` calls but hangs at the Files `onBeforeWrite`. Alright lets dig into that method.
@@ -206,4 +215,8 @@ So we're recursively looping through every directory and file and getting the me
 
 With this new knowledge we now can try to reproduce the issue by creating an asset in the root directory of assets. We create the new file it gets saved to `assets/[hash]/file.jpg`. We click publish and it's fine, we then replace the file and it again gets uploaded to `assets/[hash2]/file2.jpg` but when we publish it, it breaks. As expected the code is on this replacement now trying to delete the existing asset and to do so is trying to recursively loop through all the assets that exist in `assets`. In our case the we have >800gb of assets, more than 130,000 recorded assets in the database and each of those have 10's of variations.
 
-We've identified the issue, and raised it [here](https://github.com/silverstripe/silverstripe-assets/issues/414). We can report back to the client that we know what's happening and are working directly with the product team to resolve the issue (still in progress at time of writing). We can also provide a simple work around, place your files in a new folder rather than in the root directory as it will only recursively search for the file from where it's located.
+## Conclusion
+
+We've identified the issue, and raised it [here](https://github.com/silverstripe/silverstripe-assets/issues/414). We can report back to the client that we know what's happening and are working directly with the product team to resolve the issue (still in progress at time of writing).  
+
+We can also provide a simple work around, place your files in a new folder rather than in the root directory (as it will only recursively search for the file from where it's located).
