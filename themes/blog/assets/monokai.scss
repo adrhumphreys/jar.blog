@@ -7,8 +7,13 @@
 /* Background */
 .chroma {
 	overflow-x: scroll;
-	word-break: normal;
 	margin: 0;
+	scrollbar-width: none;
+	word-break: normal;
+
+	&::-webkit-scrollbar {
+ 		display: none;
+	}
 }
 /* Other */
 .chroma .x {
