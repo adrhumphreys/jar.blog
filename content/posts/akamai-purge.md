@@ -14,8 +14,7 @@ https://example.com/a
 https://example.com/b
 ```
 
-First you're going to need to create API credentials with CCU access
-You can then create a `.edgerc` file for those credentials
+First you're going to need to create API credentials with CCU access. You can then create a `.edgerc` file for those credentials (Akamais client requires it be passed through as file)
 ```html
 [default]
 host = put
