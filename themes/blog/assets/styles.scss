@@ -1,3 +1,4 @@
+// I know this is a mess :sad-panda:
 @import "monokai";
 
 :root {
@@ -85,10 +86,18 @@ header {
 		color: var(--header-font-color);
 		font-weight: 600;
 	}
+
+	@media(prefers-color-scheme: dark) {
+		border-bottom: 2px solid mediumaquamarine;
+	}
 }
 
 footer {
 	margin-top: 50px;
+
+	@media(prefers-color-scheme: dark) {
+		border-top: 2px solid mediumaquamarine;
+	}
 }
 
 img {
