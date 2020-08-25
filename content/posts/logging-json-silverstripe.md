@@ -5,11 +5,11 @@ tags: ["dev"]
 title: "Logging JSON to Greylogs (in Silverstripe)"
 ---
 
-When logging data to Greylogs it quite often is hard to query important parts of that data in a structured way. Greylogs has also released the ability to graph your structured data which is where this pays off even more.
+When logging data as one string to Greylogs it's quite often hard to query important parts of that data in a structured way. This post will walk you through getting your log messages into a structured manor and make use of Greylogs new graphing functionality.
 
-Let's first start with the method for logging the data to Greylogs. In our case we're using the [Silverstripe Cloud](https://www.silverstripe.com/cloud-hosting) for hosting. So we know that anything added to `syslog` will be picked up in Greylogs.
+Let's first start with the method for logging the data to Greylogs. In our case we're using [Silverstripe Cloud](https://www.silverstripe.com/cloud-hosting) for hosting. So we know that anything added to `syslog` will be picked up in Greylogs (Your case might be different so you might need to explicitly point to a log file).
 
-In this specific example I'm going to detail how we log data from the queued jobs module a real world use case.
+In this specific example I'm going to detail how we log data from the queued jobs module as a real world use case.
 
 So first we start with a `Logger` class which will handle logging:
 
@@ -35,6 +35,7 @@ final class Logger
     // We'll add more onto this in a moment
     public static function logSnapshot(Snapshot $snapshot): void
     {
+        // We force a JSON object as Greylogs only supports objects
         self::toSyslog(json_encode($snapshot->generateArray(), JSON_FORCE_OBJECT));
     }
 

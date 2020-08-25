@@ -5,7 +5,7 @@ tags: ["dev"]
 title: "Digging into a Silverstripe assets issue"
 ---
 
-Let start with the problem statement:
+Let's start with the problem statement:
 > When trying to publish a page in the CMS I am seeing a little alert with "error" in it and the page doesn't publish
 
 First we need to track down the issue, we've got Raygun for error monitoring so we'll check there.

@@ -11,7 +11,7 @@ I found that you could spin it as much as you wanted but you'd always get the sa
 ![Websockets requests with Wheelio](/wheelio/websockets.png)
 We're in luck, their still using websockets to communicate and send the emails. After digging into the messages sadly they weren't sending the coupons back any more.
 
-We can check all network requests and find that the coupon isn't retrieved at all. This means it's somewhere in the code! Running a quick find in the dev tools to search for our specific coupon comes up short, it must be "encrypted" somehow to prevent these kinds of basic checks.
+We can check all network requests and find that the coupon isn't retrieved at all. This means it's somewhere in the code. Running a quick find in the dev tools to search for our specific coupon comes up short, it must be "encrypted" somehow to prevent these kinds of basic checks.
 
 It's time to read some code. We have two files that are sent down, one that looks to be the Wheelio script for all users and another that's specific to the site (it includes a query param of `shop`). We'll start with this specific script as it's our likely candidate. We'll grab the code and run it through prettier to make reading it easier. First things, first, let's search for "coupon" and see where that gets us.
 
