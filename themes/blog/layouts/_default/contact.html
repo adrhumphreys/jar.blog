@@ -6,8 +6,8 @@
 
 <div class="intro-container">
     <div class="intro">
-        <h1>Kia Ora!  I’m Adrian.</h1>
-        <p>Developer of sorts </p>
+        <h1>Contact me.</h1>
+        <p>I prefer mail</p>
         <picture>
           <source media="(min-width: 1280px)" srcset="{{$jetplaneDesktop.Permalink}}">
           <source media="(min-width: 1024px)" srcset="{{$jetplaneTablet.Permalink}}">
@@ -16,15 +16,6 @@
     </div>
 </div>
 
-<ul class="posts">
-    <p class="label">Posts</p>
-    {{ range (where .Site.RegularPages "Section" "posts") }}
-        <li>
-            <h1><a href="{{ .Permalink }}">{{ .Title }}</a></h1>
-            <p>{{ .Description }}</p>
-            <time>{{ .Date.Format "Monday, 2 January, 2006" }}</time>
-        </li>
-    {{ end }}
-</ul>
+<div class="post">{{.Content}}</div>
 
 {{ end }}

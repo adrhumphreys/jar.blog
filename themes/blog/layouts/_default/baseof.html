@@ -12,7 +12,7 @@
     <style>{{ $style.Content | safeCSS }}</style>
 
 
-    {{ $fontFamily := "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400&family=Zilla+Slab:ital,wght@0,700;1,500" }}
+    {{ $fontFamily := "https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,700;1,700&family=Oxygen:wght@400;700&display=swap" }}
     <link rel="preconnect"
       href="https://fonts.gstatic.com"
       crossorigin />
@@ -33,13 +33,20 @@
 
   <body>
     <header>
-      <p><a href="/">🌸 Posts</a></p>
+      <p><a class="active" href="/">Posts</a></p>
+      <p><a href="/projects">Projects</a><a href="/contact">Contact</a></p>
     </header>
     <main>
       {{ block "main" . }}{{ end }}
     </main>
-    <footer>
-      <p>Check out my other half finished projects on <a href="https://github.com/adrhumphreys/">Github</a>. <br/> Made in NZ, by Adrian <br>Get in touch via: <a href="mailto:adrhumphreys@gmail.com">adrhumphreys@gmail.com</a>, I would ❤️ to hear from you</p>
-    </footer>
+    <div class="footer-wrapper">
+      {{ $footerLineOne := resources.Get "footer-line-1.svg" }}
+      {{ $footerLineTwo := resources.Get "footer-line-2.svg" }}
+      <img class="line-one" src="{{ $footerLineOne.Permalink }}">
+      <img class="line-two" src="{{ $footerLineTwo.Permalink }}">
+      <footer>
+        <p>Check me out on <a href="https://github.com/adrhumphreys/">Github</a>. <br/> Made in NZ, by Adrian <br>Get in touch via: <a href="mailto:adrhumphreys@gmail.com">adrhumphreys@gmail.com</a>,<br> I would ❤️ to hear from you</p>
+      </footer>
+    </div>
   </body>
 </html>

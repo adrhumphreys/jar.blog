@@ -1,4 +1,7 @@
-# Personal projects I've been working on:
+---
+layout: projects
+---
+
 - **[Compliments](https://github.com/adrhumphreys/compliments.jar.nz):** A quick react app to share compliments from the Reply All podcast. You can view it [here](https://compliments.jar.nz) (Protip, you can change the name).
 - **[Fixtures](https://github.com/adrhumphreys/silverstripe-fixtures):** A module that allows users to create fixtures for automated testing. Silverstripe projects have traditionally loaded fixtures via yaml files. We had a need to create fixtures programmatically, so I made a module to achieve it. This supports dependencies using a very basic implementation of Kahn's algorithm.
 - **[Impetuous](https://github.com/adrhumphreys/impetuous):** A module to statically cache responses via middleware in Silverstripe. Designed to be extended upon allowing projects to use it with different circumstances/context around cache lifetime and invalidation strategy.

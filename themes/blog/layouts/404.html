@@ -16,15 +16,9 @@
     </div>
 </div>
 
-<ul class="posts">
-    <p class="label">Posts</p>
-    {{ range (where .Site.RegularPages "Section" "posts") }}
-        <li>
-            <h1><a href="{{ .Permalink }}">{{ .Title }}</a></h1>
-            <p>{{ .Description }}</p>
-            <time>{{ .Date.Format "Monday, 2 January, 2006" }}</time>
-        </li>
-    {{ end }}
-</ul>
+<div class="post" style="margin-top: 90px; text-align: center;">
+    <h1>I've done bad on the web and made a 404</h1>
+    <p>Aroha mai whānau</p>
+</div>
 
 {{ end }}

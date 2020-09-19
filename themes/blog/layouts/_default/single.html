@@ -1,4 +1,10 @@
 {{ define "main" }}
-<h1>{{ .Title }}</h1>
-    {{ .Content }}
+<div class="intro-container">
+    <div class="intro intro--post">
+        <a href="/"><svg width="24" height="24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M24 0H0v24h24z"/><path fill="#008564" fill-rule="nonzero" d="M7.99 11H20v2H7.99v3L4 12l3.99-4z"/></g></svg>Go back to posts</a>
+        <h1>{{ .Title }}</h1>
+    </div>
+
+    <div class="post">{{ .Content }}</div>
+</div>
 {{ end }}

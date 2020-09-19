@@ -1,0 +1,21 @@
+{{ define "main" }}
+
+{{ $jetplaneMobile := resources.Get "jetplane-mobile-red.svg" }}
+{{ $jetplaneTablet := resources.Get "jetplane-tablet-red.svg" }}
+{{ $jetplaneDesktop := resources.Get "jetplane-desktop-red.svg" }}
+
+<div class="intro-container">
+    <div class="intro intro--projects">
+        <h1>Projects</h1>
+        <p>Personal projects I’ve been working on</p>
+        <picture class="red">
+          <source media="(min-width: 1280px)" srcset="{{$jetplaneDesktop.Permalink}}">
+          <source media="(min-width: 1024px)" srcset="{{$jetplaneTablet.Permalink}}">
+          <img src="{{ $jetplaneMobile.Permalink }}">
+        </picture>
+    </div>
+</div>
+
+<div class="post">{{.Content}}</div>
+
+{{ end }}
