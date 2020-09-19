@@ -36,6 +36,7 @@ body {
 	color: var(--color-dark-grey);
 	margin: 0;
 	line-height: 1.5;
+	word-break: break-word;
 }
 
 header {
@@ -81,6 +82,12 @@ h2 {
 
 iframe {
 	width: 100%;
+}
+
+li code,
+p code {
+	background-color: var(--color-peachy-light);
+	padding: 2px 5px;
 }
 
 .intro-container {
